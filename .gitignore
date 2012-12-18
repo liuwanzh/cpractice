@@ -1,4 +1,9 @@
 *.o
 *.swp
 *.out
+<<<<<<< HEAD
 .in
+=======
+*.in
+
+>>>>>>> b9433bc9bd41a39846ee0fb49b1cd3164820eeb9
