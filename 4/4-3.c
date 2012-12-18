@@ -131,17 +131,23 @@ int getop(char s[])
     s[1]='\0';
     if(!isdigit(c)&&c!='.'&&c!='-')
         return c;
-    if(c=='-'&&!isdigit(c=getch()))
-    {
-        ungetch(c);
-        return '-';
-    }
-    i=0;
     if(c=='-')
     {
-        i++;
-        c=getch();
+        if(!isdigit(c=getch()))
+        {
+             ungetch(c);
+             return '-';
+        }
+        else
+        {
+            sign=-1;
+            ungetch(c);
+        }
     }
+    else
+        ungetch(c);
+    i=0;
+    c=getch();
     if(isdigit(c))
     {
         s[i]=c;

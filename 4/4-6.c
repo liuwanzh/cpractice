@@ -153,6 +153,10 @@ int getop(char s[])
     while((s[0]=c=getch())==' '||c=='\t')
         ;
     s[1]='\0';
+  
+    if(!isdigit(c)&&c!='.'&&c!='-'&&c!='s'&&c!='e'&&c!='p'&&(!(c>='a'&&c<='z')))
+        return c;
+
     if(c>='a'&&c<='z')
     {
         if(c=='s'&&(getch()=='i'&&getch()=='n'))
@@ -166,30 +170,28 @@ int getop(char s[])
             var_count=c;
             if(!isdigit(c=getch()))
             {
+                ungetch(c);
                 return VAR;
             }
         }
     }
-    else if(!isdigit(c)&&c!='.')
+    if(c=='-')
     {
-        //不是数字也不是26个字母
-        if(c!='-')
-            return c;
+        if(!isdigit(c=getch()))
+        {
+            ungetch(c);
+            return '-';
+        }
         else
         {
-            if(!isdigit(c=getch()))//减号
-            {
-                ungetch(c);
-                return '-';
-            }
-            
-            else //负号
-            {
-                i++;
-                c=getch();
-            }
+            sign=-1;
+            ungetch(c);
         }
     }
+    else
+        ungetch(c);
+    i=0;
+    c=getch();
     if(isdigit(c))
     {
         s[i]=c;

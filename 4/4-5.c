@@ -146,23 +146,29 @@ int getop(char s[])
     s[1]='\0';
     if(!isdigit(c)&&c!='.'&&c!='-'&&c!='s'&&c!='e'&&c!='p')
         return c;
-    if(c=='-'&&!isdigit(c=getch()))
-    {
-        ungetch(c);
-        return '-';
-    }
     if(c=='s'&&(getch()=='i'&&getch()=='n'))
         return 's';   
     if(c=='e'&&(getch()=='x'&&getch()=='p'))
         return 'e';
     if(c=='p'&&(getch()=='o'&&getch()=='w'))
         return 'p';
-    i=0;
     if(c=='-')
     {
-        i++;
-        c=getch();
+        if(!isdigit(c=getch()))
+        {
+            ungetch(c);
+            return '-';
+        }
+        else
+        {
+            sign=-1;
+            ungetch(c);
+        }
     }
+    else
+        ungetch(c);
+    i=0;
+    c=getch();
     if(isdigit(c))
     {
         s[i]=c;
